@@ -31,7 +31,7 @@ for instance in $@
             --output text
             )
     fi
-
+    echo "ip address is : $IP
     done
 
 
