@@ -5,13 +5,12 @@ SECURITY_GROUP_IDS="sg-07a628098640c0e6c"
 INSTANCE_TYPE="t3.micro"
 
 for instance in $@
-    do
-
+do
     INSTANCE_ID=$(aws ec2 run-instances \
     --image-id "$AMI_ID" \
     --instance-type "$INSTANCE_TYPE" \
     --security-group-ids "$SECURITY_GROUP_IDS" \
-    --tag-specifications "ResourceType=instance,Tags=[{Key=NAME,Value=$instance}]" \
+    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instance}]" \
     --query 'Instances[0].InstanceId' \
     --output text)
 
@@ -32,7 +31,7 @@ for instance in $@
             )
     fi
     echo "ip address is : $IP"
-    done
+done
 
 
 
