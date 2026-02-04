@@ -4,7 +4,7 @@ AMI_ID="ami-0220d79f3f480ecf5"
 SECURITY_GROUP_IDS="sg-07a628098640c0e6c"
 INSTANCE_TYPE="t3.micro"
 
-for instance in $@{
+for instance in $@
     do
 
     INSTANCE_ID=$(aws ec2 run-instances \
@@ -31,7 +31,8 @@ for instance in $@{
             --output text
             )
     fi
+
     done
-}
+
 
 
