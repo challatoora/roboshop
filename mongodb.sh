@@ -21,7 +21,7 @@ validate(){
     fi
 }
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo
+cp mongo.rep /etc/yum.repos.d/mongo.rep
 validate $? "Coping mongo repo"
 
 dnf install mongodb-org -y
