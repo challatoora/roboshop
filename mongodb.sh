@@ -5,7 +5,7 @@ folder="/var/log/shell-roboshop"
 log_file="$folder/$0.log"
 
 
-if [ $? -ne 0 ]; then
+if [ $userid -ne 0 ]; then
     echo -e "You are not a root user" | tee -a $log_file
     exit 1
 fi
@@ -21,10 +21,10 @@ validate(){
     fi
 }
 
-cp mongo.rep /etc/yum.repos.d/mongo.rep
+cp mongo.repo /etc/yum.repos.d/mongo.repo
 validate $? "Coping mongo repo"
 
-dnf install mongodb-org -y
+dnf install mongodb-org -y 
 validate $? "installing mongodb server"
 
 systemctl enable mongod &>>$log_file
