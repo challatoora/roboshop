@@ -35,7 +35,7 @@ do
       #  Record_name="$instance.$Domain_Name"
     fi
 
-        echo "ip address is : $IP"
+       # echo "ip address is : $IP"
 
 #     aws route53 change-resource-record-sets \
 #     --hosted-zone-id $Zone_ID \
@@ -61,6 +61,3 @@ do
 #     echo "instance record updated: $instance"
     
 # done
-
-
-
