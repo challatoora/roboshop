@@ -37,7 +37,7 @@ fi
 mkdir -p /app &>>$log_file
 validate $? " creating directory "
 
-curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip   &>>$log_file
+curl -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip   &>>$log_file
 validate $? " dowloading"
 
 cd /app 
@@ -52,7 +52,7 @@ validate $? " unzip the file"
 npm install
 validate $? " insatalling"
 
-cp $Place user.service /etc/systemd/system/user.service &>>$log_file
+cp $Place/user.service /etc/systemd/system/user.service &>>$log_file
 validate $? " Created systemctl"
 
 systemctl daemon-reload
@@ -60,3 +60,4 @@ systemctl daemon-reload
 systemctl enable user 
 
 systemctl start user
+validate $? "starting enableing th euser"
