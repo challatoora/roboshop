@@ -74,7 +74,9 @@ if [ $index -le 0 ]; then
     validate $? "Loading db"
 else
     echo "products alredy loaded...skiping"
+fi
 
 
 systemctl restart catalogue
-validate $? "restarting catalogue" 
+validate $? "restarting catalogue"
+ 
