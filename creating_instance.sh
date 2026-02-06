@@ -60,4 +60,4 @@ do
 #     '
 #     echo "instance record updated: $instance"
     
-# done
+done
