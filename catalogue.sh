@@ -71,14 +71,16 @@ validate $? "starting catalogue"
 cp $PWD/mongo.repo /etc/yum.repos.d/mongo.repo
 dnf install mongodb-mongosh -y
 
-index=$(mongosh --host $Mongodb_host --quiet --eval  'db.getMongo().getDBNames().indexOf("catalogue")')
+mongosh --host $Mongodb_host </app/db/master-data.js
 
-if [ $index -le 0 ]; then
-    mongosh --host $Mongodb_host </app/db/master-data.js
-    validate $? "Loading db"
-else
-    echo "products alredy loaded...skiping"
-fi
+# index=$(mongosh --host $Mongodb_host --quiet --eval  'db.getMongo().getDBNames().indexOf("catalogue")')
+
+# if [ $index -le 0 ]; then
+#     mongosh --host $Mongodb_host </app/db/master-data.js
+#     validate $? "Loading db"
+# else
+#     echo "products alredy loaded...skiping"
+# fi
 
 systemctl restart catalogue
 validate $? "restarting catalogue"
