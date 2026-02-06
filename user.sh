@@ -49,7 +49,7 @@ validate $? "removing existing code"
 unzip /tmp/user.zip &>>$log_file
 validate $? " unzip the file"
 
-npm install &>>$log_file
+npm install 
 validate $? " insatalling"
 
 cp $Place//etc/systemd/system/user.service &>>$log_file
