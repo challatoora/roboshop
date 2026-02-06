@@ -21,16 +21,16 @@ validate(){
     else
         echo -e "$2 is success" | tee -a $log_file
     fi
-
-
 }
 
 dnf module disable nodejs -y
 
 dnf module enable nodejs:20 -y
 
-# dnf install nodejs -y
-# if [ $? -ne 0 ]; then
+useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
 
-#  useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
-# fi
+mkdir /app 
+
+curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip 
+cd /app 
+unzip /tmp/user.zip
