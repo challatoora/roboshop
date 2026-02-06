@@ -25,27 +25,27 @@ validate(){
 
 }
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>>$log_file
 validate $? " disable the nodejs version"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$log_file
 validate $? " enable the  20 version"
 
-dnf install nodejs -y
+dnf install nodejs -y &>>$log_file
 validate $? " installimg"
 
 id roboshop
 if [ $? -ne 0 ]; then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$log_file
     validate $? "creating system user"
 else
     echo "user alredy exist...skiping"
 fi
 
-mkdir -p /app 
+mkdir -p /app &>>$log_file
 validate $? " creating directory "
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$log_file
 validate $? " dowloading"
 
 cd /app 
@@ -54,31 +54,32 @@ validate $? " moving app"
 rm -rf /app/*
 validate $? "removing existing code"
 
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>>$log_file
 validate $? " unzip the file"
 
-npm install
+npm install &>>$log_file
 validate $? "Installing NPN"
 
-cp $Place/catalogue.service /etc/systemd/system/catalogue.service
+cp $Place/catalogue.service /etc/systemd/system/catalogue.service &>>$log_file
+validate $? " Created systemctl"
 
 systemctl daemon-reload
 systemctl enable catalogue 
 systemctl start catalogue
 validate $? "starting catalogue" 
 
-cp $PWD/mongo.repo /etc/yum.repos.d/mongo.repo
-dnf install mongodb-mongosh -y
+# cp $PWD/mongo.repo /etc/yum.repos.d/mongo.repo
+# dnf install mongodb-mongosh -y
 
-index=$(mongosh --host $Mongodb_host --quiet --evil  'db.getMongo().getDBNames().indexOf("catalogue")')
-if [ $index -le 0 ]; then
-    mongosh --host $Mongodb_host </app/db/master-data.js
-    validate $? "Loading db"
-else
-    echo "products alredy loaded...skiping"
-fi
+# index=$(mongosh --host $Mongodb_host --quiet --evil  'db.getMongo().getDBNames().indexOf("catalogue")')
+# if [ $index -le 0 ]; then
+#     mongosh --host $Mongodb_host </app/db/master-data.js
+#     validate $? "Loading db"
+# else
+#     echo "products alredy loaded...skiping"
+# fi
 
 
-systemctl restart catalogue
-validate $? "restarting catalogue"
+# systemctl restart catalogue
+# validate $? "restarting catalogue"
  
