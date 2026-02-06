@@ -16,19 +16,18 @@ do
     --query 'Instances[0].InstanceId' \
     --output text)
 
-    if [ $instance=="frontend" ]; then
+    if [ $instance == "frontend" ]; then
         IP=$(
             aws ec2 describe-instances \
             --instance-ids $INSTANCE_ID \
             --query 'Reservations[].Instances[].PublicIpAddress' \
             --output text
         )
-        Record_name="$Domain_Name"
+        Record_name="$Domain_Name"   
         
         
     else
-         
-         IP=$(
+        IP=$(
             aws ec2 describe-instances \
             --instance-ids $INSTANCE_ID \
             --query 'Reservations[].Instances[].PrivateIpAddress' \
