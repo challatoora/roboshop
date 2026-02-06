@@ -58,8 +58,9 @@ unzip /tmp/catalogue.zip
 validate $? " unzip the file"
 
 npm install
+validate $? "Installing NPN"
 
-cp $Place/catalogue service /etc/systemd/system/catalogue.service
+cp $Place/catalogue.service /etc/systemd/system/catalogue.service
 
 systemctl daemon-reload
 systemctl enable catalogue 
