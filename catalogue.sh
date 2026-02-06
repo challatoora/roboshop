@@ -73,14 +73,14 @@ dnf install mongodb-mongosh -y
 
 mongosh --host $Mongodb_host </app/db/master-data.js
 
-# index=$(mongosh --host $Mongodb_host --quiet --eval  'db.getMongo().getDBNames().indexOf("catalogue")')
+index=$(mongosh --host $Mongodb_host --quiet --eval  'db.getMongo().getDBNames().indexOf("catalogue")')
 
-# if [ $index -le 0 ]; then
-#     mongosh --host $Mongodb_host </app/db/master-data.js
-#     validate $? "Loading db"
-# else
-#     echo "products alredy loaded...skiping"
-# fi
+if [ $index -le 0 ]; then
+    mongosh --host $Mongodb_host </app/db/master-data.js
+    validate $? "Loading db"
+else
+    echo "products alredy loaded...skiping"
+fi
 
 systemctl restart catalogue
 validate $? "restarting catalogue"
