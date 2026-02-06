@@ -52,7 +52,7 @@ validate $? " unzip the file"
 npm install 
 validate $? " insatalling"
 
-cp $Place//etc/systemd/system/user.service &>>$log_file
+cp $Place/etc/systemd/system/user.service &>>$log_file
 validate $? " Created systemctl"
 
 systemctl daemon-reload
