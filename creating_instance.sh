@@ -14,24 +14,24 @@ do
     --security-group-ids "$SECURITY_GROUP_IDS" \
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instance}]" \
     --query 'Instances[0].InstanceId' \
-    --output text)
+    --output text )
 
     if [ $instance == "frontend" ]; then
         IP=$(
-        aws ec2 describe-instances \
-        --instance-ids $INSTANCE_ID \
-        --query 'Reservations[].Instances[].PublicIpAddress' \
-        --output text
+            aws ec2 describe-instances \
+            --instance-ids $INSTANCE_ID \
+            --query 'Reservations[].Instances[].PublicIpAddress' \
+            --output text
         )
         Record_name="$Domain_Name"   
         
 
     else
         IP=$(
-        aws ec2 describe-instances \
-        --instance-ids $INSTANCE_ID \
-        --query 'Reservations[].Instances[].PrivateIpAddress' \
-        --output text
+            aws ec2 describe-instances \
+            --instance-ids $INSTANCE_ID \
+            --query 'Reservations[].Instances[].PrivateIpAddress' \
+            --output text
         )
         Record_name="$instance.$Domain_Name"
     fi
