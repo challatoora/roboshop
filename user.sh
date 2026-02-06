@@ -21,12 +21,20 @@ validate(){
     else
         echo -e "$2 is success" | tee -a $log_file
     fi
+
+
 }
 
 dnf module disable nodejs -y &>>$log_file
+validate $? " disable the nodejs version"
 
 dnf module enable nodejs:20 -y &>>$log_file
+validate $? " enable the  20 version"
 
+dnf install nodejs -y &>>$log_file
+validate $? " installimg"
+
+id roboshop
 if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$log_file
     validate $? "creating system user"
@@ -37,7 +45,7 @@ fi
 mkdir -p /app &>>$log_file
 validate $? " creating directory "
 
-curl -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip   &>>$log_file
+curl -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip &>>$log_file
 validate $? " dowloading"
 
 cd /app 
@@ -49,15 +57,14 @@ validate $? "removing existing code"
 unzip /tmp/user.zip &>>$log_file
 validate $? " unzip the file"
 
-npm install
-validate $? " insatalling"
+npm install &>>$log_file
+validate $? "Installing NPN"
 
 cp $Place/user.service /etc/systemd/system/user.service &>>$log_file
 validate $? " Created systemctl"
 
 systemctl daemon-reload
-
 systemctl enable user 
-
 systemctl start user
-validate $? "starting enableing th euser"
+validate $? "starting user" 
+
