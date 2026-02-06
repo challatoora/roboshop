@@ -68,10 +68,10 @@ systemctl enable catalogue
 systemctl start catalogue
 validate $? "starting catalogue" 
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo
+cp $PWD/mongo.repo /etc/yum.repos.d/mongo.repo
 dnf install mongodb-mongosh -y
 
-mongosh --host $Mongodb_host </app/db/master-data.js
+#mongosh --host $Mongodb_host </app/db/master-data.js
 
 # index=$(mongosh --host $Mongodb_host --quiet --eval  'db.getMongo().getDBNames().indexOf("catalogue")')
 
