@@ -23,7 +23,7 @@ do
             --query 'Reservations[].Instances[].PublicIpAddress' \
             --output text
         )
-       # Record_name="$Domain_Name"
+        Record_name="$Domain_Name"
     else
         IP=$(
             aws ec2 describe-instances \
@@ -32,32 +32,32 @@ do
             --output text
         )
         
-      #  Record_name="$instance.$Domain_Name"
+        Record_name="$instance.$Domain_Name"
     fi
 
         echo "ip address is : $IP"
 
-#     aws route53 change-resource-record-sets \
-#     --hosted-zone-id $Zone_ID \
-#     --change-batch '
-#     {
-#         "Changes": [
-#             {
-#             "Action": "UPSERT",
-#             "ResourceRecordSet": {
-#                 "Name": "'$Record_name'",
-#                 "Type": "A",
-#                 "TTL": 1,
-#                 "ResourceRecords": [
-#                 {
-#                     "Value": "'$IP'"
-#                 }
-#                 ]
-#             }
-#             }
-#         ]
-#     }
-#     '
-#     echo "instance record updated: $instance"
+    aws route53 change-resource-record-sets \
+    --hosted-zone-id $Zone_ID \
+    --change-batch '
+    {
+        "Changes": [
+            {
+            "Action": "UPSERT",
+            "ResourceRecordSet": {
+                "Name": "'$Record_name'",
+                "Type": "A",
+                "TTL": 1,
+                "ResourceRecords": [
+                {
+                    "Value": "'$IP'"
+                }
+                ]
+            }
+            }
+        ]
+    }
+    '
+    echo "instance record updated: $instance"
     
 done
