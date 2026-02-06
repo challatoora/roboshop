@@ -71,7 +71,7 @@ validate $? "starting catalogue"
 cp $Place/mongo.repo /etc/yum.repos.d/mongo.repo
 dnf install mongodb-mongosh -y
 
-#mongosh --host $Mongodb_host </app/db/master-data.js
+mongosh --host $Mongodb_host </app/db/master-data.js
 
 # index=$(mongosh --host $Mongodb_host --quiet --eval  'db.getMongo().getDBNames().indexOf("catalogue")')
 
