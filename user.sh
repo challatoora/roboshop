@@ -23,14 +23,40 @@ validate(){
     fi
 }
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>>$log_file
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$log_file
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+if [ $? -ne 0 ]; then
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$log_file
+    validate $? "creating system user"
+else
+    echo "user alredy exist...skiping"
+fi
 
-mkdir /app 
+mkdir -p /app &>>$log_file
+validate $? " creating directory "
 
-curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip 
+curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip   &>>$log_file
+validate $? " dowloading"
+
 cd /app 
-unzip /tmp/user.zip
+validate $? " moving app"
+
+rm -rf /app/*
+validate $? "removing existing code"
+
+unzip /tmp/user.zip &>>$log_file
+validate $? " unzip the file"
+
+npm install &>>$log_file
+validate $? " insatalling"
+
+cp $Place//etc/systemd/system/user.service &>>$log_file
+validate $? " Created systemctl"
+
+systemctl daemon-reload
+
+systemctl enable user 
+
+systemctl start user
