@@ -5,7 +5,6 @@ userid=$(id -u)
 folder="/var/log/shell-roboshop"
 log_file="$folder/$0.log"
 Place=$PWD
-Mongodb_host=mongodb.mreddy.online
 mysql_host=mysql.mreddy.online
 
 
