@@ -42,6 +42,6 @@ validate(){
     unzip /tmp/frontend.zip
     validate $? " unzip"
 
-    cp $Place nginx.conf /etc/nginx/nginx.conf
+    cp $Place/nginx.conf /etc/nginx/nginx.conf
 
     systemctl restart nginx 
