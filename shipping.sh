@@ -57,7 +57,7 @@ validate $? " installing building "
 
 mv target/shipping-1.0.jar shipping.jar &>>$log_file
 
-cp $Place/shipping.service/etc/systemd/system/shipping.service &>>$log_file
+cp $Place /shipping.service/etc/systemd/system/shipping.service
 validate $? " Created systemctl"
 
 dnf install mysql -y &>>$log_file
