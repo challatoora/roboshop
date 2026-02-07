@@ -46,15 +46,16 @@ validate $? " dowloading"
 cd /app 
 validate $? " moving app"
 
-rm -rf /app/*
-validate $? "removing existing code"
+mvn clean package 
+validate $? "installing and building shipping"
+
+
 
 unzip /tmp/shipping.zip&>>$log_file
 validate $? " unzip the file"
 
 
-mvn clean package 
-validate $? "installing and building shipping"
+
 
 mv target/shipping-1.0.jar shipping.jar 
 validate $? " moving reaming shipping"
@@ -62,24 +63,25 @@ validate $? " moving reaming shipping"
 cp $Place/shipping.service /etc/systemd/system/shipping.service &>>$log_file
 validate $? " Created systemctl"
 
-systemctl daemon-reload
-systemctl enable shipping
-
-systemctl start shipping
-validate $? "starting shiping"
 
 dnf install mysql -y &>>$log_file
+
 mysql -h $mysql_HOST -uroot -pRoboshop@1 -e 'use cities'
 if [ $? -ne 0 ]; then
 
-mysql -h $mysql_HOST -uroot -pRoboShop@1 < /app/db/schema.sql &>>$log_file
+    mysql -h $mysql_HOST -uroot -pRoboShop@1 < /app/db/schema.sql &>>$log_file
 
-mysql -h $mysql_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$log_file
+    mysql -h $mysql_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$log_file
 
-mysql -h $mysql_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$log_file
+    mysql -h $mysql_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$log_file
 else
- validate $? " loaded data"
+   echo -e " data is loaded"
+fi 
 
-systemctl restart shipping
-fi
+
+systemctl enable shipping
+
+systemctl start shipping
+
+
 
