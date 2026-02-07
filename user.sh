@@ -34,7 +34,7 @@ validate $? " enable the  20 version"
 dnf install nodejs -y &>>$log_file
 validate $? " installimg"
 
-id roboshop
+id roboshop &>>$log_file
 if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$log_file
     validate $? "creating system user"
