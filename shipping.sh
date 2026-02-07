@@ -5,6 +5,7 @@ folder="/var/log/shell-roboshop"
 log_file="$folder/$0.log"
 Place=$PWD
 Mongodb_host=mongodb.mreddy.online
+mysql_HOST=mysql.mreddy.online
 
 
 if [ $userid -ne 0 ]; then
@@ -68,12 +69,16 @@ systemctl start shipping
 validate $? "starting shiping"
 
 dnf install mysql -y 
+mysql -h $mysql_HOST -uroot -pRoboshop@1 -e 'use cities'
+if [ $? -ne 0 ]; then
 
-mysql -h mysql.mreddy.online -uroot -pRoboShop@1  /app/db/schema.sql
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql
 
-mysql -h mysql.mreddy.online -uroot -pRoboShop@1  /app/db/app-user.sql 
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql 
 
-mysql -h mysql.mreddy.online -uroot -pRoboShop@1  /app/db/master-data.sql
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql
+else
+ validate $? " loaded data"
 
 systemctl restart shipping
 
