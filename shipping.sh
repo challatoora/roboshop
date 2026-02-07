@@ -50,7 +50,7 @@ mvn clean package
 validate $? "installing and building shipping"
 
 rm -rf /app/*
-
+ 
 unzip /tmp/shipping.zip&>>$log_file
 validate $? " unzip the file"
 
