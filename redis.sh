@@ -32,7 +32,7 @@ validate(){
   validate $? "allaowing remote connection"
   
   systemctl enable redis &>>$log_file
-  systemctl start redis 
+  systemctl restart redis 
   validate $? "enable the redis"
 
 
