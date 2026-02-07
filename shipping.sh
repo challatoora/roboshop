@@ -73,4 +73,4 @@ mysql -h $Mysql_host -uroot -pRoboShop@1 < /app/db/master-data.sql
 
 systemctl enable shipping 
 systemctl start shipping
-Validate $? "Enableing and starting the shipping"
+validate $? "Enableing and starting the shipping"
