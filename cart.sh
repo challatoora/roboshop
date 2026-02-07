@@ -35,6 +35,7 @@ dnf install nodejs -y &>>$log_file
 validate $? " installimg"
 
 
+id roboshop &>>$log_file
 if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$log_file
     validate $? "creating system user"
@@ -64,8 +65,8 @@ cp $Place/cart.service /etc/systemd/system/cart.service &>>$log_file
 validate $? " Created systemctl"
 
 systemctl daemon-reload
-systemctl enable user 
-systemctl start user
-validate $? "starting user" 
+systemctl enable cart
+systemctl start cart
+validate $? "starting cart
 
  
