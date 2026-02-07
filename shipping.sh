@@ -46,16 +46,15 @@ validate $? " dowloading"
 cd /app 
 validate $? " moving app"
 
-mvn clean package 
-validate $? "installing and building shipping"
-
 rm -rf /app/*
- 
+validate $? "removing existing code"
+
 unzip /tmp/shipping.zip&>>$log_file
 validate $? " unzip the file"
 
 
-
+mvn clean package 
+validate $? "installing and building shipping"
 
 mv target/shipping-1.0.jar shipping.jar 
 validate $? " moving reaming shipping"
@@ -76,12 +75,8 @@ if [ $? -ne 0 ]; then
     mysql -h $mysql_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$log_file
 else
    echo -e " data is loaded"
-fi 
+   
 
-
-systemctl enable shipping
-
-systemctl start shipping
-
-
+systemctl restart shipping
+fi
 
