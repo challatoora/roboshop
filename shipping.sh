@@ -50,11 +50,12 @@ validate $? "removing existing code"
 unzip /tmp/shipping.zip &>>$log_file
 validate $? " unzip the file"
 
-cd /app 
+
 mvn clean package &>>$log_file
 validate $? " installing building "
 
-mv target/shipping-1.0.jar shipping.jar &>>$log_file
+mv target/shipping-1.0.jar shipping.jar 
+validate $? " moving and shipping"
 
 cp $Place /shipping.serive/etc/systemd/system/shipping.service
 validate $? " Created systemctl"
