@@ -20,6 +20,7 @@ validate(){
         echo -e "$2 is success" | tee -a $log_file
     fi
 }
+
   dnf module disable redis -y &>>$log_file
   validate $? " disable the redis"
 
@@ -29,10 +30,10 @@ validate(){
   dnf install redis -y &>>$log_file
   validate $? " installing redis"
 
-  sed -i -e "s/127.0.0.1/0.0.0.0/g" -e "/protected-mode/ c protected-mode no" /etc/redis/redis.conf
-
+  sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf
+ validate $? "allaowing remote connection"
   
-  systemctl enable redis 
+  systemctl enable redis &>>$log_file
   validate $? "enable the redis"
 
   systemctl start redis 
