@@ -45,3 +45,4 @@ validate(){
     cp $Place/nginx.conf /etc/nginx/nginx.conf
 
     systemctl restart nginx 
+    validate $? " starting the nginix"
