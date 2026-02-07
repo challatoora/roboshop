@@ -52,25 +52,25 @@ unzip /tmp/shipping.zip &>>$log_file
 validate $? " unzip the file"
 
 cd /app 
-mvn clean package 
+mvn clean package &>>$log_file
 validate $? "installing and building th eshipping"
 
-mv target/shipping-1.0.jar shipping.jar 
+mv target/shipping-1.0.jar shipping.jar &>>$log_file
 validate $? "Moving and ranaming the shipping"
 
 cp $Place/shipping.service /etc/systemd/system/shipping.service &>>$log_file
 validate $? " Created systemctl"
 
 
-dnf install mysql -y 
+dnf install mysql -y &>>$log_file
 validate $? "installing mwsql"
 
 
-mysql -h $Mysql_host -uroot -pRoboShop@1 < /app/db/schema.sql
-mysql -h $Mysql_host -uroot -pRoboShop@1 < /app/db/app-user.sql 
-mysql -h $Mysql_host -uroot -pRoboShop@1 < /app/db/master-data.sql
+mysql -h $Mysql_host -uroot -pRoboShop@1 < /app/db/schema.sql &>>$log_file
+mysql -h $Mysql_host -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$log_file
+mysql -h $Mysql_host -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$log_file
 
 
-systemctl enable shipping 
-systemctl start shipping
+systemctl enable shipping &>>$log_file
+systemctl start shipping &>>$log_file
 validate $? "Enableing and starting the shipping"
