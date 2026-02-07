@@ -24,7 +24,7 @@ validate(){
     fi
 
 }
-cp $place/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
+cp $Place/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
 validate $? " copiying the rabbirmq repo"
 
 dnf install rabbitmq-server -y
