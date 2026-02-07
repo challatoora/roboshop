@@ -67,6 +67,6 @@ validate $? " Created systemctl"
 systemctl daemon-reload
 systemctl enable cart
 systemctl start cart
-validate $? "starting cart
+validate $? "starting cart"
 
  
