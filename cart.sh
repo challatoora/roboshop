@@ -46,7 +46,7 @@ fi
 mkdir -p /app &>>$log_file
 validate $? " creating directory "
 
-curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$log_file
+curl -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$log_file
 validate $? " dowloading"
 
 cd /app 
