@@ -81,5 +81,5 @@ else
  validate $? " loaded data"
 
 systemctl restart shipping
-
+fi
 
