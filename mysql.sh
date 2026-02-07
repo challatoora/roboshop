@@ -29,7 +29,6 @@ Validate $? "Installing Sql" &>>$log_file
 
 systemctl enable mysqld
 systemctl start mysqld 
-Validate $? "Staring sql"
 
 mysql_secure_installation --set-root-pass RoboShop@1
 validate $? "Validate rootpasswoed"
