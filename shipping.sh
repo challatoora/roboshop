@@ -65,11 +65,17 @@ validate $? " Created systemctl"
 dnf install mysql -y &>>$log_file
 validate $? "installing mwsql"
 
+mysql -h $Mysql_host -uroot -pRoboShop@1 -e 'use cities'
 
-mysql -h $Mysql_host -uroot -pRoboShop@1 < /app/db/schema.sql &>>$log_file
-mysql -h $Mysql_host -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$log_file
-mysql -h $Mysql_host -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$log_file
+if [ $? -ne 0 ]; then
 
+    mysql -h $Mysql_host -uroot -pRoboShop@1 < /app/db/schema.sql &>>$log_file
+    mysql -h $Mysql_host -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$log_file
+    mysql -h $Mysql_host -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$log_file
+    validate $? " Data is loaded"
+else
+    echo " data is loaded skipping"
+fi 
 
 systemctl enable shipping &>>$log_file
 systemctl start shipping &>>$log_file
